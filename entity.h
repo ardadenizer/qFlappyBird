@@ -7,10 +7,16 @@
 class Entity : public QLabel
 {
 private:
-    unsigned int x_cordinate;
-    unsigned int y_cordinate;
+    unsigned int xPos;
+    unsigned int yPos;
 public:
-     Entity();
+    Entity();
+    Entity(unsigned int xVal, unsigned int yVal);
+    unsigned int getPosX();
+    unsigned int getPosY();
+    void setPosX(unsigned int x);
+    void setPosY(unsigned int y);
+
 };
 
 #endif // ENTITY_H
