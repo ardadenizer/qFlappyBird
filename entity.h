@@ -10,7 +10,8 @@ private:
     unsigned int xPos;
     unsigned int yPos;
 public:
-    Entity();
+    using QLabel::QLabel;
+    Entity(): QLabel(){}  // Calls QLabel's default constructor
     Entity(unsigned int xVal, unsigned int yVal);
     unsigned int getPosX();
     unsigned int getPosY();

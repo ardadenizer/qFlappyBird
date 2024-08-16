@@ -3,6 +3,7 @@
 #include <Qlabel.h>
 #include <QPixmap>
 #include <QKeyEvent>
+#include "entity.h"
 
 
 int main(int argc, char *argv[]) {
@@ -15,8 +16,8 @@ int main(int argc, char *argv[]) {
     window.show();
 
     /* Initialization of bird object */
-    QLabel* p_bird = NULL;
-    p_bird = new QLabel(&window); // deleted when game is over.
+    Entity* p_bird = NULL;
+    p_bird = new Entity(&window); // deleted when game is over.
 
     QPixmap birdPixMap;
     if (birdPixMap.load("../../Assets/bird.png")) {
@@ -25,13 +26,13 @@ int main(int argc, char *argv[]) {
         qDebug() << "Failed to load bird image.";
     }
 
-    unsigned int x_pos = 100;
-    unsigned int y_pos = 100;
+    p_bird->setPosX(100);
+    p_bird->setPosY(100);
 
     birdPixMap = birdPixMap.scaled(100, 70, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     p_bird->setPixmap(birdPixMap);
-    p_bird->setGeometry(x_pos, y_pos, birdPixMap.width(), birdPixMap.height());
+    p_bird->setGeometry(p_bird->getPosX(), p_bird->getPosY(), birdPixMap.width(), birdPixMap.height());
     p_bird->raise();
     p_bird->show();
 

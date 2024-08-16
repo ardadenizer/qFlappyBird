@@ -1,10 +1,5 @@
 #include "entity.h"
 
-Entity::Entity()
-{
-    // Default Constructor implementation
-}
-
 Entity::Entity(unsigned int xVal, unsigned int yVal)
 {
     setPosX(xVal);
