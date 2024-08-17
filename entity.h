@@ -6,13 +6,14 @@
 
 class Entity : public QLabel
 {
-private:
-    unsigned int xPos;
-    unsigned int yPos;
+protected:
+    unsigned int m_xPos;
+    unsigned int m_yPos;
 public:
-    using QLabel::QLabel;
-    Entity(): QLabel(){}  // Calls QLabel's default constructor
+    using QLabel::QLabel; // Uses constructors from QLabel class
+
     Entity(unsigned int xVal, unsigned int yVal);
+
     unsigned int getPosX();
     unsigned int getPosY();
     void setPosX(unsigned int x);

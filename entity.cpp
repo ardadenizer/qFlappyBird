@@ -8,21 +8,22 @@ Entity::Entity(unsigned int xVal, unsigned int yVal)
 
  void Entity::setPosX(unsigned int x)
 {
-    xPos = x;
+    m_xPos = x;
+    this->move(m_xPos,m_yPos);
 }
 
 void Entity::setPosY(unsigned int y)
 {
-    yPos = y;
+    m_yPos = y;
+    this->move(m_xPos,m_yPos);
 }
 
 unsigned int Entity::getPosX()
 {
-    return xPos;
+    return m_xPos;
 }
-
 
 unsigned int Entity::getPosY()
 {
-    return yPos;
+    return m_yPos;
 }

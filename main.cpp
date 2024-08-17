@@ -1,10 +1,17 @@
 #include <QMainWindow>
 #include <QApplication>
-#include <Qlabel.h>
+#include <Qlabel>
 #include <QPixmap>
 #include <QKeyEvent>
-#include "entity.h"
+#include <QTime>
+#include "bird.h"
 
+void delay()
+{
+    QTime dieTime= QTime::currentTime().addMSecs(1);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 1);
+}
 
 int main(int argc, char *argv[]) {
 
@@ -16,8 +23,8 @@ int main(int argc, char *argv[]) {
     window.show();
 
     /* Initialization of bird object */
-    Entity* p_bird = NULL;
-    p_bird = new Entity(&window); // deleted when game is over.
+    Bird* p_bird = nullptr;
+    p_bird = new Bird(&window); // deleted when game is over.
 
     QPixmap birdPixMap;
     if (birdPixMap.load("../../Assets/bird.png")) {
@@ -26,8 +33,8 @@ int main(int argc, char *argv[]) {
         qDebug() << "Failed to load bird image.";
     }
 
-    p_bird->setPosX(100);
-    p_bird->setPosY(100);
+    p_bird->setPosX(0);
+    p_bird->setPosY(0);
 
     birdPixMap = birdPixMap.scaled(100, 70, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
@@ -36,15 +43,24 @@ int main(int argc, char *argv[]) {
     p_bird->raise();
     p_bird->show();
 
-    // Debugging output
+    // Debugging output:
     qDebug() << "QLabel geometry:" << p_bird->geometry();
     qDebug() << "QLabel visible:" << p_bird->isVisible();
 
+    for (int i = 0; i < 500; i++)
+    {
+        p_bird->move(i,i);
+        delay();
+    }
 
+    // Debugging output after moving the Bird object:
+    qDebug() << "QLabel geometry:" << p_bird->geometry();
+    qDebug() << "QLabel visible:" << p_bird->isVisible();
 
     int result = app.exec();
 
     delete p_bird; // Clean up the QLabel when the application exits
+    p_bird = nullptr;
 
     return result;
 }
