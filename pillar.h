@@ -6,7 +6,7 @@
 class Pillar : public Entity
 {
 public:
-    Pillar();
+    using Entity::Entity;
 };
 
 #endif // PILLAR_H

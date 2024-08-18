@@ -4,26 +4,26 @@ Bird::Bird() {}
 
 void Bird::keyPressEvent(QKeyEvent *event)
 {
-    const int jumpStep = 20;
+    const int jumpStep = 150;
 
     if (event != nullptr)
     {
         switch (event->key())
         {
-        case Qt::Key_Up:
-            if (m_yPos >= jumpStep) m_yPos -= jumpStep;
-            qDebug() << "Up Key is pressed";
-            break;
         case Qt::Key_Space:
-            m_yPos += jumpStep;
+            if (m_yPos >= jumpStep) m_yPos -= jumpStep;
             qDebug() << "Space Key is pressed";
             break;
+        case Qt::Key_Up:
+            if (m_yPos >= 20) m_yPos -= 20;
+            qDebug() << "Up Key is pressed";
+            break;
         case Qt::Key_Down:
-            if (m_xPos >= jumpStep) m_xPos -= jumpStep;
+            if (m_yPos + jumpStep < this->parentWidget()->height()) m_yPos += jumpStep;
             qDebug() << "Down Key is pressed";
             break;
         case Qt::Key_Right:
-            m_xPos += jumpStep;
+            if (m_xPos + jumpStep < this->parentWidget()->width()) m_xPos += jumpStep;
             break;
         default:
             QLabel::keyPressEvent(event);  // Call base class implementation for unhandled keys

@@ -11,3 +11,4 @@ Game loop
 Timer 
 builder scripts (fetch required packages, built compile for the target OS)
 Game Class (config constants: pillar gap,...)
+Window Pixel selector: Hover the mouse within QMainWindow and it should tell the x,y coordinates of the window

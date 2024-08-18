@@ -33,8 +33,9 @@ int main(int argc, char *argv[]) {
         qDebug() << "Failed to load bird image.";
     }
 
+    // Bird spwaning location:
     p_bird->setPosX(0);
-    p_bird->setPosY(0);
+    p_bird->setPosY(300);
 
     birdPixMap = birdPixMap.scaled(100, 70, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
