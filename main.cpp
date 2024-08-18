@@ -47,15 +47,9 @@ int main(int argc, char *argv[]) {
     qDebug() << "QLabel geometry:" << p_bird->geometry();
     qDebug() << "QLabel visible:" << p_bird->isVisible();
 
-    for (int i = 0; i < 500; i++)
-    {
-        p_bird->move(i,i);
-        delay();
-    }
+    p_bird->setFocusPolicy(Qt::StrongFocus);
 
-    // Debugging output after moving the Bird object:
-    qDebug() << "QLabel geometry:" << p_bird->geometry();
-    qDebug() << "QLabel visible:" << p_bird->isVisible();
+
 
     int result = app.exec();
 

@@ -1,0 +1,13 @@
+Collision Detection Manager
+Pillar Class
+Random Generator
+Bird Animations
+Bird movement (arc jump, free fall)
+Menu windows
+Music
+User Database
+Bird class -> singleton pattern
+Game loop
+Timer 
+builder scripts (fetch required packages, built compile for the target OS)
+Game Class (config constants: pillar gap,...)
