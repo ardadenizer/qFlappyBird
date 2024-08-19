@@ -12,6 +12,7 @@ Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent,
         qDebug() << "Failed to load bird image.";
     }
 
+    // Resizing bird image:
     birdPixMap = birdPixMap.scaled(100, 70, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     this->setPixmap(birdPixMap);
@@ -31,6 +32,13 @@ Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent,
     animation->setEasingCurve(QEasingCurve::OutQuad);
 
     connect(animation.get(), &QPropertyAnimation::finished, this, &Bird::updatePosition);
+
+    // Start the free fall movement timer
+    freeFallTimer = std::make_unique<QTimer>(this);
+
+    connect(freeFallTimer.get(), &QTimer::timeout, this, &Bird::freeFall);
+
+    freeFallTimer->start(150);
 }
 
 Bird::~Bird()
@@ -85,4 +93,22 @@ void Bird::updatePosition()
     // Update m_xPos and m_yPos based on the widget's current position
     m_xPos = this->x();
     m_yPos = this->y();
+}
+
+void Bird::freeFall()
+{
+    const unsigned int stepSize = 20;  // Move downward by 5 pixels each interval
+    const unsigned int bottomY = 500;  // Desired bottom Y coordinate
+
+    if (m_yPos + stepSize <= bottomY)
+    {
+        m_yPos += stepSize;
+        this->move(m_xPos, m_yPos);
+        qDebug() << "Moving down, current position:" << QPoint(m_xPos, m_yPos);
+    }
+    else
+    {
+        freeFallTimer->stop();  // Stop moving if we've reached the bottom
+        qDebug() << "Reached bottom, stopping downward movement.";
+    }
 }

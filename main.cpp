@@ -29,13 +29,6 @@ int main(int argc, char *argv[]) {
     p_bird = new Bird(&window, BIRD_X_POS, BIRD_Y_POS); // deleted when game is over.
 
 
-    // QPropertyAnimation *animation = new QPropertyAnimation(p_bird, "geometry");
-    // animation->setDuration(2000);  // Duration of 2 seconds
-    // animation->setStartValue(QRect(0, 0, birdPixMap.width(), birdPixMap.height()));  // Start position and size
-    // animation->setEndValue(QRect(600, 400, birdPixMap.width(), birdPixMap.height()));  // End position and size
-    // animation->setEasingCurve(QEasingCurve::OutBounce);  // Easing curve for bounce effect
-
-    // animation->start();  // Start the animation
 
 
     int result = app.exec();
