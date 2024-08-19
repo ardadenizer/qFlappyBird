@@ -3,9 +3,12 @@
 Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent, xPos, yPos)
 {
     QPixmap birdPixMap;
-    if (birdPixMap.load("../../Assets/bird.png")) {
+    if (birdPixMap.load("../../Assets/bird.png"))
+    {
         qDebug() << "Bird image is loaded!";
-    } else {
+    }
+    else
+    {
         qDebug() << "Failed to load bird image.";
     }
 
@@ -21,6 +24,13 @@ Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent,
     qDebug() << "QLabel visible:" << this->isVisible();
 
     this->setFocusPolicy(Qt::StrongFocus);
+
+    // Initialize the QPropertyAnimation object
+    animation = std::make_unique<QPropertyAnimation>(this, "geometry");
+    animation->setDuration(500);
+    animation->setEasingCurve(QEasingCurve::OutQuad);
+
+    connect(animation.get(), &QPropertyAnimation::finished, this, &Bird::updatePosition);
 }
 
 Bird::~Bird()
@@ -31,6 +41,8 @@ Bird::~Bird()
 void Bird::keyPressEvent(QKeyEvent *event)
 {
     const int jumpStep = 150;
+    QRect startRect = this->geometry();
+    QRect endRect = startRect;
 
     if (event != nullptr)
     {
@@ -39,10 +51,6 @@ void Bird::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Space:
             if (m_yPos >= jumpStep) m_yPos -= jumpStep;
             qDebug() << "Space Key is pressed";
-            break;
-        case Qt::Key_Up:
-            if (m_yPos >= 20) m_yPos -= 20;
-            qDebug() << "Up Key is pressed";
             break;
         case Qt::Key_Down:
             if (m_yPos + jumpStep < this->parentWidget()->height()) m_yPos += jumpStep;
@@ -57,6 +65,24 @@ void Bird::keyPressEvent(QKeyEvent *event)
             return;
         }
 
-        this-> move(m_xPos,m_yPos);
+        endRect.moveTo(m_xPos, m_yPos);
+        startAnimation(startRect, endRect);
+        qDebug() << "Bird position after animation: " << endRect.topLeft();
+        qDebug() << "Bird position that class knows:" << this->getPosX() << this->getPosY();
     }
+}
+
+void Bird::startAnimation(const QRect &startRect, const QRect &endRect)
+{
+    animation->stop();
+    animation->setStartValue(startRect);
+    animation->setEndValue(endRect);
+    animation->start();
+}
+
+void Bird::updatePosition()
+{
+    // Update m_xPos and m_yPos based on the widget's current position
+    m_xPos = this->x();
+    m_yPos = this->y();
 }
