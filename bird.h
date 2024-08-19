@@ -1,12 +1,12 @@
 #ifndef BIRD_H
 #define BIRD_H
 
+#include "constants.h"
 #include "entity.h"
 #include <QKeyEvent>
 #include <QDebug>
 #include <QPropertyAnimation>
 #include <memory>
-#include <QTimer>
 
 class Bird: public Entity
 {
@@ -21,13 +21,13 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
-    void startAnimation(const QRect &startRect, const QRect &endRect);
+    void startjumpAnimation(const QRect &startRect, const QRect &endRect);
+    void startFreeFallAnimation();
     void updatePosition();
-    void freeFall();
 
 private:
-    std::unique_ptr<QPropertyAnimation> animation;
-    std::unique_ptr<QTimer> freeFallTimer;
+    std::unique_ptr<QPropertyAnimation> m_jumpAnimation;
+    std::unique_ptr<QPropertyAnimation> m_freeFallAnimation;
 
 };
 

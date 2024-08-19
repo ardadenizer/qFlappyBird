@@ -26,19 +26,20 @@ Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent,
 
     this->setFocusPolicy(Qt::StrongFocus);
 
-    // Initialize the QPropertyAnimation object
-    animation = std::make_unique<QPropertyAnimation>(this, "geometry");
-    animation->setDuration(500);
-    animation->setEasingCurve(QEasingCurve::OutQuad);
+    // Initialization of jump animation:
+    m_jumpAnimation = std::make_unique<QPropertyAnimation>(this, "geometry");
+    m_jumpAnimation->setDuration(500);
+    m_jumpAnimation->setEasingCurve(QEasingCurve::OutQuad);
 
-    connect(animation.get(), &QPropertyAnimation::finished, this, &Bird::updatePosition);
+    connect(m_jumpAnimation.get(), &QPropertyAnimation::finished, this, &Bird::updatePosition);
+    connect(m_jumpAnimation.get(), &QPropertyAnimation::finished, this, &Bird::startFreeFallAnimation);
 
-    // Start the free fall movement timer
-    freeFallTimer = std::make_unique<QTimer>(this);
+    m_freeFallAnimation = std::make_unique<QPropertyAnimation>(this,"geometry");
+    m_freeFallAnimation->setEasingCurve(QEasingCurve::InQuad);
 
-    connect(freeFallTimer.get(), &QTimer::timeout, this, &Bird::freeFall);
+    // Start the free-fall animation initially
+    startFreeFallAnimation();
 
-    freeFallTimer->start(150);
 }
 
 Bird::~Bird()
@@ -48,7 +49,7 @@ Bird::~Bird()
 
 void Bird::keyPressEvent(QKeyEvent *event)
 {
-    const int jumpStep = 150;
+    const int jumpStep = BIRD_JUMP_STEP;
     QRect startRect = this->geometry();
     QRect endRect = startRect;
 
@@ -74,18 +75,22 @@ void Bird::keyPressEvent(QKeyEvent *event)
         }
 
         endRect.moveTo(m_xPos, m_yPos);
-        startAnimation(startRect, endRect);
+
+        m_freeFallAnimation->stop();
+
+        startjumpAnimation(startRect, endRect);
+
         qDebug() << "Bird position after animation: " << endRect.topLeft();
         qDebug() << "Bird position that class knows:" << this->getPosX() << this->getPosY();
     }
 }
 
-void Bird::startAnimation(const QRect &startRect, const QRect &endRect)
+void Bird::startjumpAnimation(const QRect &startRect, const QRect &endRect)
 {
-    animation->stop();
-    animation->setStartValue(startRect);
-    animation->setEndValue(endRect);
-    animation->start();
+    m_jumpAnimation->stop();
+    m_jumpAnimation->setStartValue(startRect);
+    m_jumpAnimation->setEndValue(endRect);
+    m_jumpAnimation->start();
 }
 
 void Bird::updatePosition()
@@ -95,20 +100,23 @@ void Bird::updatePosition()
     m_yPos = this->y();
 }
 
-void Bird::freeFall()
+void Bird::startFreeFallAnimation()
 {
-    const unsigned int stepSize = 20;  // Move downward by 5 pixels each interval
-    const unsigned int bottomY = 500;  // Desired bottom Y coordinate
+    QRect currentRect = this->geometry();
 
-    if (m_yPos + stepSize <= bottomY)
+    const unsigned int targetPosY = 450;
+
+    if (m_yPos < targetPosY)
     {
-        m_yPos += stepSize;
-        this->move(m_xPos, m_yPos);
-        qDebug() << "Moving down, current position:" << QPoint(m_xPos, m_yPos);
+        m_freeFallAnimation->stop();
+        m_freeFallAnimation->setStartValue(currentRect);
+        m_freeFallAnimation->setEndValue(QRect(m_xPos, targetPosY, currentRect.width(), currentRect.height()));
+        m_freeFallAnimation->setDuration(BIRD_FALL_DURATION);  // Adjust the speed of the fall as needed
+        m_freeFallAnimation->start();
     }
     else
     {
-        freeFallTimer->stop();  // Stop moving if we've reached the bottom
+        m_freeFallAnimation->stop();  // Stop moving if we've reached the bottom
         qDebug() << "Reached bottom, stopping downward movement.";
     }
 }
