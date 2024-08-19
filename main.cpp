@@ -4,7 +4,9 @@
 #include <QPixmap>
 #include <QKeyEvent>
 #include <QTime>
+#include <QPropertyAnimation>
 #include "bird.h"
+#include "constants.h"
 
 void delay()
 {
@@ -19,37 +21,21 @@ int main(int argc, char *argv[]) {
     QMainWindow window;
 
     window.setStyleSheet("QMainWindow { background-image: url('../../Assets/background.png'); background-position: center; background-repeat: no-repeat; }");
-    window.setFixedSize(800, 600); // Set window size
+    window.setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT); // Set window size
     window.show();
 
     /* Initialization of bird object */
     Bird* p_bird = nullptr;
-    p_bird = new Bird(&window); // deleted when game is over.
+    p_bird = new Bird(&window, BIRD_X_POS, BIRD_Y_POS); // deleted when game is over.
 
-    QPixmap birdPixMap;
-    if (birdPixMap.load("../../Assets/bird.png")) {
-        qDebug() << "Bird image is loaded!";
-    } else {
-        qDebug() << "Failed to load bird image.";
-    }
 
-    // Bird spwaning location:
-    p_bird->setPosX(0);
-    p_bird->setPosY(300);
+    // QPropertyAnimation *animation = new QPropertyAnimation(p_bird, "geometry");
+    // animation->setDuration(2000);  // Duration of 2 seconds
+    // animation->setStartValue(QRect(0, 0, birdPixMap.width(), birdPixMap.height()));  // Start position and size
+    // animation->setEndValue(QRect(600, 400, birdPixMap.width(), birdPixMap.height()));  // End position and size
+    // animation->setEasingCurve(QEasingCurve::OutBounce);  // Easing curve for bounce effect
 
-    birdPixMap = birdPixMap.scaled(100, 70, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    p_bird->setPixmap(birdPixMap);
-    p_bird->setGeometry(p_bird->getPosX(), p_bird->getPosY(), birdPixMap.width(), birdPixMap.height());
-    p_bird->raise();
-    p_bird->show();
-
-    // Debugging output:
-    qDebug() << "QLabel geometry:" << p_bird->geometry();
-    qDebug() << "QLabel visible:" << p_bird->isVisible();
-
-    p_bird->setFocusPolicy(Qt::StrongFocus);
-
+    // animation->start();  // Start the animation
 
 
     int result = app.exec();

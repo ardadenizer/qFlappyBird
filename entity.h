@@ -12,7 +12,7 @@ protected:
 public:
     using QLabel::QLabel; // Uses constructors from QLabel class
 
-    Entity(unsigned int xVal, unsigned int yVal);
+    Entity(QWidget *parent = nullptr, unsigned int xPos = 0, unsigned int yPos = 0);
 
     unsigned int getPosX();
     unsigned int getPosY();

@@ -1,9 +1,9 @@
 #include "entity.h"
 
-Entity::Entity(unsigned int xVal, unsigned int yVal)
+Entity::Entity(QWidget *parent, unsigned int xPos, unsigned int yPos) :
+    QLabel(parent), m_xPos(xPos), m_yPos(yPos)
 {
-    setPosX(xVal);
-    setPosY(yVal);
+    // Additional initialization if necessary
 }
 
  void Entity::setPosX(unsigned int x)

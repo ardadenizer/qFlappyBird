@@ -8,6 +8,7 @@ Music
 User Database
 Bird class -> singleton pattern
 Game loop
+Game level state machine
 Timer 
 builder scripts (fetch required packages, built compile for the target OS)
 Game Class (config constants: pillar gap,...)

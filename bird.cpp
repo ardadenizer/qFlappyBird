@@ -1,6 +1,32 @@
 #include "bird.h"
 
-Bird::Bird() {}
+Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent, xPos, yPos)
+{
+    QPixmap birdPixMap;
+    if (birdPixMap.load("../../Assets/bird.png")) {
+        qDebug() << "Bird image is loaded!";
+    } else {
+        qDebug() << "Failed to load bird image.";
+    }
+
+    birdPixMap = birdPixMap.scaled(100, 70, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    this->setPixmap(birdPixMap);
+    this->setGeometry(this->getPosX(), this->getPosY(), birdPixMap.width(), birdPixMap.height());
+    this->raise();
+    this->show();
+
+    // Debugging output:
+    qDebug() << "QLabel geometry:" << this->geometry();
+    qDebug() << "QLabel visible:" << this->isVisible();
+
+    this->setFocusPolicy(Qt::StrongFocus);
+}
+
+Bird::~Bird()
+{
+
+}
 
 void Bird::keyPressEvent(QKeyEvent *event)
 {
@@ -24,6 +50,7 @@ void Bird::keyPressEvent(QKeyEvent *event)
             break;
         case Qt::Key_Right:
             if (m_xPos + jumpStep < this->parentWidget()->width()) m_xPos += jumpStep;
+            qDebug() << "Right Key is pressed";
             break;
         default:
             QLabel::keyPressEvent(event);  // Call base class implementation for unhandled keys

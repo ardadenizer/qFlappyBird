@@ -7,12 +7,15 @@
 
 class Bird: public Entity
 {
-public:
-    Bird();
-    using Entity::Entity; // Uses constructors from Entity class
+    Q_OBJECT
 
-protected:
-    void keyPressEvent(QKeyEvent *event) override;
+    public:
+        Bird(QWidget *parent = nullptr,unsigned int xPos = 0,unsigned int yPos = 300);
+        ~Bird();
+        using Entity::Entity; // Uses constructors from Entity class
+
+    protected:
+        void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // BIRD_H
