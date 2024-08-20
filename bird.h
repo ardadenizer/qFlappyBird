@@ -24,6 +24,7 @@ private slots:
     void startjumpAnimation(const QRect &startRect, const QRect &endRect);
     void startFreeFallAnimation();
     void updatePosition();
+    void updatePositionDuringAnimation(const QVariant &value);
 
 private:
     std::unique_ptr<QPropertyAnimation> m_jumpAnimation;

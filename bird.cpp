@@ -31,11 +31,17 @@ Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent,
     m_jumpAnimation->setDuration(500);
     m_jumpAnimation->setEasingCurve(QEasingCurve::OutQuad);
 
-    connect(m_jumpAnimation.get(), &QPropertyAnimation::finished, this, &Bird::updatePosition);
-    connect(m_jumpAnimation.get(), &QPropertyAnimation::finished, this, &Bird::startFreeFallAnimation);
 
     m_freeFallAnimation = std::make_unique<QPropertyAnimation>(this,"geometry");
     m_freeFallAnimation->setEasingCurve(QEasingCurve::InQuad);
+
+    connect(m_jumpAnimation.get(), &QPropertyAnimation::stateChanged, this, &Bird::updatePosition);
+    connect(m_freeFallAnimation.get(), &QPropertyAnimation::finished, this, &Bird::updatePosition);
+
+    connect(m_jumpAnimation.get(), &QPropertyAnimation::finished, this, &Bird::startFreeFallAnimation);
+
+    // Connect valueChanged signal to update position during animation
+    connect(m_freeFallAnimation.get(), &QPropertyAnimation::valueChanged, this, &Bird::updatePositionDuringAnimation);
 
     // Start the free-fall animation initially
     startFreeFallAnimation();
@@ -100,6 +106,14 @@ void Bird::updatePosition()
     m_yPos = this->y();
 }
 
+void Bird::updatePositionDuringAnimation(const QVariant &value)
+{
+    // Update m_xPos and m_yPos based on the current geometry during the animation
+    QRect currentRect = value.toRect();
+    m_xPos = currentRect.x();
+    m_yPos = currentRect.y();
+}
+
 void Bird::startFreeFallAnimation()
 {
     QRect currentRect = this->geometry();
@@ -111,7 +125,7 @@ void Bird::startFreeFallAnimation()
         m_freeFallAnimation->stop();
         m_freeFallAnimation->setStartValue(currentRect);
         m_freeFallAnimation->setEndValue(QRect(m_xPos, targetPosY, currentRect.width(), currentRect.height()));
-        m_freeFallAnimation->setDuration(BIRD_FALL_DURATION);  // Adjust the speed of the fall as needed
+        m_freeFallAnimation->setDuration(BIRD_FALL_DURATION);
         m_freeFallAnimation->start();
     }
     else
