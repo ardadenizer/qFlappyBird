@@ -1,7 +1,7 @@
 #include "pillar.h"
 
 
-Pillar::Pillar(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent, xPos, yPos)
+Pillar::Pillar(QWidget *parent,uint32_t xPos, uint32_t yPos): Entity(parent, xPos, yPos)
 {
     QPixmap pillarPixMap;
     if (pillarPixMap.load("../../Assets/pillar.png"))
@@ -14,7 +14,7 @@ Pillar::Pillar(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(par
     }
 
     // Resizing bird image:
-    pillarPixMap = pillarPixMap.scaled(100, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    pillarPixMap = pillarPixMap.scaled((parent->width() * 0.1), (parent->height() * 0.3), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     this->setPixmap(pillarPixMap);
     this->setGeometry(this->getPosX(), this->getPosY(), pillarPixMap.width(), pillarPixMap.height());
@@ -27,7 +27,7 @@ Pillar::Pillar(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(par
 
 }
 
-unsigned int Pillar::calculatePillarGap()
+uint32_t Pillar::calculatePillarGap()
 {
     return QRandomGenerator::global()->bounded(150, 350);
 }

@@ -7,17 +7,17 @@
 class Entity : public QLabel
 {
 protected:
-    unsigned int m_xPos;
-    unsigned int m_yPos;
+    uint32_t m_xPos;
+    uint32_t m_yPos;
 public:
     using QLabel::QLabel; // Uses constructors from QLabel class
 
-    Entity(QWidget *parent = nullptr, unsigned int xPos = 0, unsigned int yPos = 0);
+    Entity(QWidget *parent = nullptr, uint32_t xPos = 0,uint32_t yPos = 0);
 
-    unsigned int getPosX();
-    unsigned int getPosY();
-    void setPosX(unsigned int x);
-    void setPosY(unsigned int y);
+    uint32_t getPosX();
+    uint32_t getPosY();
+    void setPosX(uint32_t x);
+    void setPosY(uint32_t y);
 
 };
 

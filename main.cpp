@@ -9,13 +9,6 @@
 #include "pillar.h"
 #include "constants.h"
 
-void delay()
-{
-    QTime dieTime= QTime::currentTime().addMSecs(1);
-    while (QTime::currentTime() < dieTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 1);
-}
-
 int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
@@ -29,8 +22,8 @@ int main(int argc, char *argv[]) {
     Bird* p_bird = nullptr;
     p_bird = new Bird(&window, BIRD_X_POS, BIRD_Y_POS); // deleted when game is over.
 
-    Pillar* p_pillar = nullptr;
-    p_pillar = new Pillar(&window);
+    // Pillar* p_pillar = nullptr;
+    // p_pillar = new Pillar(&window);
 
 
 
@@ -38,8 +31,8 @@ int main(int argc, char *argv[]) {
 
     delete p_bird; // Clean up the QLabel when the application exits
     p_bird = nullptr;
-    delete p_pillar;
-    p_pillar = nullptr;
+    // delete p_pillar;
+    // p_pillar = nullptr;
 
     return result;
 }

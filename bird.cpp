@@ -1,6 +1,6 @@
 #include "bird.h"
 
-Bird::Bird(QWidget *parent,unsigned int xPos, unsigned int yPos): Entity(parent, xPos, yPos)
+Bird::Bird(QWidget *parent,uint32_t xPos, uint32_t yPos): Entity(parent, xPos, yPos)
 {
     QPixmap birdPixMap;
     if (birdPixMap.load("../../Assets/bird.png"))
@@ -110,7 +110,7 @@ void Bird::startFreeFallAnimation()
 {
     QRect currentRect = this->geometry();
 
-    const unsigned int targetPosY = 450;
+    const uint32_t targetPosY = 450;
 
     if (m_yPos < targetPosY)
     {

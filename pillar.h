@@ -7,8 +7,8 @@
 class Pillar : public Entity
 {
 public:
-    Pillar(QWidget *parent = nullptr,unsigned int xPos = 300,unsigned int yPos = 350);
-    unsigned int calculatePillarGap();
+    Pillar(QWidget *parent = nullptr, uint32_t xPos = 300, uint32_t yPos = 400);
+    uint32_t calculatePillarGap();
 };
 
 #endif // PILLAR_H

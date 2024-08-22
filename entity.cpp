@@ -1,29 +1,29 @@
 #include "entity.h"
 
-Entity::Entity(QWidget *parent, unsigned int xPos, unsigned int yPos) :
+Entity::Entity(QWidget *parent, uint32_t xPos, uint32_t yPos) :
     QLabel(parent), m_xPos(xPos), m_yPos(yPos)
 {
     // Additional initialization if necessary
 }
 
- void Entity::setPosX(unsigned int x)
+void Entity::setPosX(uint32_t x)
 {
     m_xPos = x;
     this->move(m_xPos,m_yPos);
 }
 
-void Entity::setPosY(unsigned int y)
+void Entity::setPosY(uint32_t y)
 {
     m_yPos = y;
     this->move(m_xPos,m_yPos);
 }
 
-unsigned int Entity::getPosX()
+uint32_t Entity::getPosX()
 {
     return m_xPos;
 }
 
-unsigned int Entity::getPosY()
+uint32_t Entity::getPosY()
 {
     return m_yPos;
 }
