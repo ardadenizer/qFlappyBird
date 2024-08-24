@@ -2,7 +2,6 @@
 
 Bird::Bird(QWidget *parent,uint32_t xPos, uint32_t yPos): Entity(parent, xPos, yPos)
 {
-    QPixmap birdPixMap;
     if (birdPixMap.load("../../Assets/bird.png"))
     {
         qDebug() << "Bird image is loaded!";
@@ -89,6 +88,8 @@ void Bird::startjumpAnimation(const QRect &startRect, const QRect &endRect)
     m_jumpAnimation->setStartValue(startRect);
     m_jumpAnimation->setEndValue(endRect);
     m_jumpAnimation->start();
+
+    rotateTop();
 }
 
 void Bird::updatePosition()
@@ -110,15 +111,15 @@ void Bird::startFreeFallAnimation()
 {
     QRect currentRect = this->geometry();
 
-    const uint32_t targetPosY = 450;
-
-    if (m_yPos < targetPosY)
+    if (m_yPos < BIRD_FALL_Y_TARGET)
     {
         m_freeFallAnimation->stop();
         m_freeFallAnimation->setStartValue(currentRect);
-        m_freeFallAnimation->setEndValue(QRect(m_xPos, targetPosY, currentRect.width(), currentRect.height()));
+        m_freeFallAnimation->setEndValue(QRect(m_xPos, BIRD_FALL_Y_TARGET, currentRect.width(), currentRect.height()));
         m_freeFallAnimation->setDuration(BIRD_FALL_DURATION);
         m_freeFallAnimation->start();
+
+        rotateBottom();
     }
     else
     {
@@ -126,4 +127,29 @@ void Bird::startFreeFallAnimation()
         // Raise a flag so game can know when bird has fallen to the ground.
         qDebug() << "Reached bottom, stopping downward movement.";
     }
+}
+
+
+void Bird::rotateTop()
+{
+    QTransform transform;
+    transform.rotate(-45);  // Rotate by 45 degrees
+    QPixmap rotatedPixmap = birdPixMap.transformed(transform, Qt::SmoothTransformation);
+
+    this->setPixmap(rotatedPixmap);
+
+    // Adjust the geometry if necessary
+    this->setGeometry(this->x(), this->y(), rotatedPixmap.width(), rotatedPixmap.height());
+}
+
+void Bird::rotateBottom()
+{
+    QTransform transform;
+    transform.rotate(45);  // Rotate by 45 degrees
+    QPixmap rotatedPixmap = birdPixMap.transformed(transform, Qt::SmoothTransformation);
+
+    this->setPixmap(rotatedPixmap);
+
+    // Adjust the geometry if necessary
+    this->setGeometry(this->x(), this->y(), rotatedPixmap.width(), rotatedPixmap.height());
 }

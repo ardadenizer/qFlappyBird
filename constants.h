@@ -8,5 +8,6 @@
 #define BIRD_FALL_DURATION  750 // in ms
 #define BIRD_JUMP_DURATION  500 // in ms
 #define BIRD_JUMP_STEP      100
+#define BIRD_FALL_Y_TARGET  450
 
 #endif // CONSTANTS_H

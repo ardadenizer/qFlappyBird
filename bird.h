@@ -19,6 +19,8 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+    void rotateTop();
+    void rotateBottom();
 
 private slots:
     void startjumpAnimation(const QRect &startRect, const QRect &endRect);
@@ -29,6 +31,7 @@ private slots:
 private:
     std::unique_ptr<QPropertyAnimation> m_jumpAnimation;
     std::unique_ptr<QPropertyAnimation> m_freeFallAnimation;
+    QPixmap birdPixMap;
 
 };
 
