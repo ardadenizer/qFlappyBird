@@ -19,8 +19,7 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
-    void rotateTop();
-    void rotateBottom();
+    void rotateBird(int directon);
 
 private slots:
     void startjumpAnimation(const QRect &startRect, const QRect &endRect);

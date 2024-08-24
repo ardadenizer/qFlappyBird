@@ -89,7 +89,7 @@ void Bird::startjumpAnimation(const QRect &startRect, const QRect &endRect)
     m_jumpAnimation->setEndValue(endRect);
     m_jumpAnimation->start();
 
-    rotateTop();
+    rotateBird(-45);
 }
 
 void Bird::updatePosition()
@@ -119,7 +119,7 @@ void Bird::startFreeFallAnimation()
         m_freeFallAnimation->setDuration(BIRD_FALL_DURATION);
         m_freeFallAnimation->start();
 
-        rotateBottom();
+        rotateBird(45);
     }
     else
     {
@@ -130,26 +130,14 @@ void Bird::startFreeFallAnimation()
 }
 
 
-void Bird::rotateTop()
+void Bird::rotateBird(int direction)
 {
     QTransform transform;
-    transform.rotate(-45);  // Rotate by 45 degrees
+    transform.rotate(direction);  // Rotate by the value entered
     QPixmap rotatedPixmap = birdPixMap.transformed(transform, Qt::SmoothTransformation);
 
     this->setPixmap(rotatedPixmap);
 
-    // Adjust the geometry if necessary
     this->setGeometry(this->x(), this->y(), rotatedPixmap.width(), rotatedPixmap.height());
 }
 
-void Bird::rotateBottom()
-{
-    QTransform transform;
-    transform.rotate(45);  // Rotate by 45 degrees
-    QPixmap rotatedPixmap = birdPixMap.transformed(transform, Qt::SmoothTransformation);
-
-    this->setPixmap(rotatedPixmap);
-
-    // Adjust the geometry if necessary
-    this->setGeometry(this->x(), this->y(), rotatedPixmap.width(), rotatedPixmap.height());
-}
