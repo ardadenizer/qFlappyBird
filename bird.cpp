@@ -47,11 +47,6 @@ Bird::Bird(QWidget *parent,uint32_t xPos, uint32_t yPos): Entity(parent, xPos, y
 
 }
 
-Bird::~Bird()
-{
-
-}
-
 void Bird::keyPressEvent(QKeyEvent *event)
 {
     const int jumpStep = BIRD_JUMP_STEP;

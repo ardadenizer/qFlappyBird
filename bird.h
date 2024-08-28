@@ -14,7 +14,7 @@ class Bird: public Entity
 
 public:
     Bird(QWidget *parent = nullptr,unsigned int xPos = 0,unsigned int yPos = 300);
-    ~Bird();
+    ~Bird() = default;
     using Entity::Entity; // Uses constructors from Entity class if required
 
 protected:
