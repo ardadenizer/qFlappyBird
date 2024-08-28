@@ -12,10 +12,10 @@ class Game
 {
 private:
     bool isGameRunning;
-    QTimer *gameTimer;
+    std::unique_ptr<QTimer> m_pGameTimer;
     std::unique_ptr<Bird> m_pBird;
     std::unique_ptr<Pillar> m_pPillar;
-    QMainWindow gamePlayWindow;
+    std::unique_ptr<QMainWindow> m_pGamePlayWindow;
 
 public:
     Game();
