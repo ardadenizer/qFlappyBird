@@ -8,24 +8,30 @@
 #include "bird.h"
 #include "pillar.h"
 
-class Game
+class Game : public QObject
 {
-private:
-    bool isGameRunning;
-    std::unique_ptr<QTimer> m_pGameTimer;
-    std::unique_ptr<Bird> m_pBird;
-    std::unique_ptr<Pillar> m_pPillar;
-    std::unique_ptr<QMainWindow> m_pGamePlayWindow;
+    Q_OBJECT
 
-public:
-    Game();
-    void Initialize();
-    void Destroy();
+    private:
+        bool m_isGameRunning;
+        uint32_t m_score;
+        std::unique_ptr<QTimer> m_pGameTimer;
+        std::unique_ptr<Bird> m_pBird;
+        std::unique_ptr<Pillar> m_pPillar;
+        std::unique_ptr<QMainWindow> m_pGamePlayWindow;
 
-    // These APIs based on QTimer object
-    void Run();
-    void Pause();
-    void End();
+    public:
+        Game();
+        void initialize();
+        void destroy();
+        void handle();
+        void detectCollision();
+        void gameLoop();
+
+        // These APIs based on QTimer object
+        void run();
+        void pause();
+        void end();
 };
 
 #endif // GAME_H

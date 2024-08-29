@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     Game* GameInstance = new Game();
-    GameInstance->Initialize();
+    GameInstance->initialize();
 
 
     int result = app.exec();
