@@ -31,3 +31,22 @@ uint32_t Pillar::calculatePillarGap()
 {
     return QRandomGenerator::global()->bounded(150, 350);
 }
+
+void Pillar::placePillar(size_t t)
+{
+
+}
+
+void Pillar::generatePillar(QWidget *parent , uint32_t xPos, uint32_t yPos )
+{
+    const uint32_t pillarNumber = 4;
+    const uint32_t pillarGap    = 100; // in px
+
+    for (size_t i = 0; i < pillarNumber; i++)
+    {
+        if (i % 2 == 0)
+            placePillar(i);
+        else
+            placePillar(i);
+    }
+}

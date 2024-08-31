@@ -6,6 +6,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QtMultimedia>
 #include <memory>
 
 class Bird: public Entity
@@ -31,6 +32,8 @@ private:
     std::unique_ptr<QPropertyAnimation> m_jumpAnimation;
     std::unique_ptr<QPropertyAnimation> m_freeFallAnimation;
     QPixmap birdPixMap;
+    std::unique_ptr<QMediaPlayer> m_birdJumpEffect;
+    std::unique_ptr<QAudioOutput> m_audioOutput;
 
 };
 

@@ -25,6 +25,21 @@ Bird::Bird(QWidget *parent,uint32_t xPos, uint32_t yPos): Entity(parent, xPos, y
 
     this->setFocusPolicy(Qt::StrongFocus);
 
+    m_audioOutput = std::make_unique<QAudioOutput>(this);
+    m_birdJumpEffect = std::make_unique<QMediaPlayer>(this);
+
+    m_birdJumpEffect->setAudioOutput(m_audioOutput.get());
+
+    m_birdJumpEffect->setSource(QUrl::fromLocalFile("../../Assets/sounds/flap.mp3"));
+
+    m_audioOutput->setVolume(0.5);
+
+    if (m_birdJumpEffect->mediaStatus() == QMediaPlayer::LoadedMedia) {
+        qDebug() << "Media loaded successfully";
+    } else {
+        qDebug() << "Failed to load media";
+    }
+
     // Initialization of jump animation:
     m_jumpAnimation = std::make_unique<QPropertyAnimation>(this, "geometry");
     m_jumpAnimation->setDuration(BIRD_JUMP_DURATION);
@@ -60,6 +75,7 @@ void Bird::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Space:
             if (m_yPos >= jumpStep) m_yPos -= jumpStep;
             qDebug() << "Space Key is pressed";
+            m_birdJumpEffect->play();
             break;
         default:
             QLabel::keyPressEvent(event);  // Call base class implementation for unhandled keys
