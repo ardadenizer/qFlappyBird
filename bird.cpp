@@ -30,7 +30,7 @@ Bird::Bird(QWidget *parent,uint32_t xPos, uint32_t yPos): Entity(parent, xPos, y
 
     m_birdJumpEffect->setAudioOutput(m_audioOutput.get());
 
-    m_birdJumpEffect->setSource(QUrl::fromLocalFile("../../Assets/sounds/flap.mp3"));
+    m_birdJumpEffect->setSource(QUrl::fromLocalFile("../../Assets/sounds/flap.wav"));
 
     m_audioOutput->setVolume(0.5);
 
